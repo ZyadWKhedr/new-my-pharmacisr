@@ -1,0 +1,90 @@
+{
+  "project_info": {
+    "project_number": "621933923785",
+    "project_id": "helio-84742",
+    "storage_bucket": "helio-84742.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:621933923785:android:0c4bc8194286d3476e6c18",
+        "android_client_info": {
+          "package_name": "com.example.healio"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "621933923785-nq6ieqo6ldmj3taa8vsqi3erdvjmapvd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.healio",
+            "certificate_hash": "78eb5c14c711b01543aed1b01bbaf064d73d6c52"
+          }
+        },
+        {
+          "client_id": "621933923785-1u8jqg5k3p8n4uk8uq08ifs289cv4blv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0-jbts49yZ8ViaxKBDfGAo6QhXtbnTL0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "621933923785-1u8jqg5k3p8n4uk8uq08ifs289cv4blv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "621933923785-obl1nqg6vgruh2n49mnst0m58pvo1pmq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.healio"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:621933923785:android:1ed4a9e455e00d3b6e6c18",
+        "android_client_info": {
+          "package_name": "com.example.new_my_pharmacist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "621933923785-1u8jqg5k3p8n4uk8uq08ifs289cv4blv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0-jbts49yZ8ViaxKBDfGAo6QhXtbnTL0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "621933923785-1u8jqg5k3p8n4uk8uq08ifs289cv4blv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "621933923785-obl1nqg6vgruh2n49mnst0m58pvo1pmq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.healio"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
