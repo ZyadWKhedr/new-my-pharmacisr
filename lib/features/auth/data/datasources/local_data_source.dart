@@ -5,16 +5,18 @@ class LocalDataSource {
 
   LocalDataSource({required this.prefs});
 
-  Future saveToken(String token) async {
+  // Save user token
+  Future<void> saveToken(String token) async {
     await prefs.setString('user_token', token);
   }
 
-   String? getToken() {
+  // Retrieve user token
+  String? getToken() {
     return prefs.getString('user_token');
   }
 
+  // Remove user token (sign-out)
   Future<void> removeToken() async {
     await prefs.remove('user_token');
   }
-  
 }
