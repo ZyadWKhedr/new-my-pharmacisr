@@ -8,9 +8,7 @@ class MyApp extends StatelessWidget {
       designSize: Size(375, 812), 
       minTextAdapt: true, 
       builder: (context, child) {
-        return MaterialApp(
-          home: HomePage(),
-        );
+         return const Placeholder();
       },
     );
   }
