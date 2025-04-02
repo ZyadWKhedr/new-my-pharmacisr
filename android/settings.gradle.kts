@@ -26,3 +26,6 @@ plugins {
 }
 
 include(":app")
+include(":rive_common")
+project(":rive_common").buildFileName = "build.gradle.kts"
+
