@@ -75,56 +75,67 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        body: Stack(
+        body: Column(
           children: [
-            // Main UI Content
-            Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Container(
-                  width: double.infinity,
-                  height: 470.h,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(70),
-                    ),
-                    color: AppColors.primaryColor,
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.w),
-                    child: Column(
-                      children: [
-                        SizedBox(height: 40.h),
-                        _buildTitle(),
-                        SizedBox(height: 10.h),
-                        _buildLabel('Email'),
-                        CustomTextFormField(
-                          controller: _emailController,
-                          hintText: 'johnDoe@gmail.com',
-                          keyboardType: TextInputType.emailAddress,
-                        ),
-                        SizedBox(height: 10.h),
-                        _buildLabel('Password'),
-                        CustomTextFormField(
-                          controller: _passwordController,
-                          hintText: '********',
-                          isPassword: true,
-                        ),
-                        SizedBox(height: 30.h),
-                        _isLoading
-                            ? Container() // Empty container when loading is active
-                            : CustomButton(text: 'Sign Up', onPressed: _signUp),
-                        SizedBox(height: 15.h),
-                        const SignupFooter(),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+            SizedBox(height: 100.h),
+            Image.asset(
+              'assets/Screenshot_2025-04-02_202531-removebg-preview.png',
+              height: 150.h,
             ),
-
-            // Full-page Loading Widget
-            if (_isLoading) const LoadingWidget(),
+            Expanded(
+              child: Stack(
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        height: 470.h,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(70),
+                          ),
+                          color: AppColors.primaryColor,
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20.w),
+                          child: Column(
+                            children: [
+                              SizedBox(height: 40.h),
+                              _buildTitle(),
+                              SizedBox(height: 10.h),
+                              _buildLabel('Email'),
+                              CustomTextFormField(
+                                controller: _emailController,
+                                hintText: 'johnDoe@gmail.com',
+                                keyboardType: TextInputType.emailAddress,
+                              ),
+                              SizedBox(height: 10.h),
+                              _buildLabel('Password'),
+                              CustomTextFormField(
+                                controller: _passwordController,
+                                hintText: '********',
+                                isPassword: true,
+                              ),
+                              SizedBox(height: 30.h),
+                              _isLoading
+                                  ? Container() // Empty container when loading
+                                  : CustomButton(
+                                    text: 'Sign Up',
+                                    onPressed: _signUp,
+                                  ),
+                              SizedBox(height: 15.h),
+                              const SignupFooter(),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  if (_isLoading) const LoadingWidget(),
+                ],
+              ),
+            ),
           ],
         ),
       ),

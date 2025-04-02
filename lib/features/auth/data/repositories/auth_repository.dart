@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:new_my_pharmacist/core/helpers/auth_error_helper.dart';
 import 'package:new_my_pharmacist/features/auth/data/datasources/local_data_source.dart';
@@ -25,9 +26,7 @@ class AuthRepositoryImpl implements AuthRepository {
         throw Exception("User not found");
       }
     } on firebase_auth.FirebaseAuthException catch (e) {
-      throw Exception(
-        AuthErrorHandler.getErrorMessage(e),
-      ); 
+      throw Exception(AuthErrorHandler.getErrorMessage(e));
     }
   }
 
@@ -46,9 +45,7 @@ class AuthRepositoryImpl implements AuthRepository {
         throw Exception("User creation failed");
       }
     } on firebase_auth.FirebaseAuthException catch (e) {
-      throw Exception(
-        AuthErrorHandler.getErrorMessage(e),
-      ); 
+      throw Exception(AuthErrorHandler.getErrorMessage(e));
     }
   }
 
@@ -56,5 +53,17 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<void> signOut() async {
     await firebaseAuth.signOut();
     await localDataSource.removeToken();
+  }
+
+  @override
+  Future<Either<String, void>> forgotPassword(String email) async {
+    try {
+      await firebaseAuth.sendPasswordResetEmail(email: email);
+      return const Right(null); 
+    } on firebase_auth.FirebaseAuthException catch (e) {
+      return Left(
+        AuthErrorHandler.getErrorMessage(e),
+      ); 
+    }
   }
 }
