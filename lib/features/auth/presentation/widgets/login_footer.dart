@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:new_my_pharmacist/core/consts/colors.dart';
+import 'package:new_my_pharmacist/core/routes.dart';
 
-class CustomRow extends StatelessWidget {
-  const CustomRow({super.key});
+class LoginFooter extends StatelessWidget {
+  const LoginFooter({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +13,9 @@ class CustomRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            context.push('/forgot-password');
+          },
           child: Text(
             'Forgot password?',
             style: TextStyle(
@@ -23,7 +27,9 @@ class CustomRow extends StatelessWidget {
         ),
         SizedBox(width: 120.w),
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            context.pushReplacement(AppRoutes.signup);
+          },
           child: Text(
             'Have an account?',
             style: TextStyle(

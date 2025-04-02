@@ -4,35 +4,38 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:new_my_pharmacist/core/consts/colors.dart';
 import 'package:new_my_pharmacist/core/helpers/auth_error_helper.dart';
-import 'package:new_my_pharmacist/core/helpers/toast_helper.dart';
 import 'package:new_my_pharmacist/core/helpers/auth_validator_helper.dart';
+import 'package:new_my_pharmacist/core/helpers/toast_helper.dart';
 import 'package:new_my_pharmacist/core/routes.dart';
 import 'package:new_my_pharmacist/features/auth/presentation/widgets/custom_button.dart';
-import 'package:new_my_pharmacist/features/auth/presentation/widgets/loading_widget.dart';
-import 'package:new_my_pharmacist/features/auth/presentation/widgets/login_footer.dart';
 import 'package:new_my_pharmacist/features/auth/presentation/widgets/custom_text_form_field.dart';
+import 'package:new_my_pharmacist/features/auth/presentation/widgets/loading_widget.dart';
+import 'package:new_my_pharmacist/features/auth/presentation/widgets/signup_footer.dart';
 import 'package:new_my_pharmacist/features/auth/presentation/providers/auth_provider.dart';
 
-class LoginPage extends ConsumerStatefulWidget {
-  const LoginPage({super.key});
+class SignUpPage extends ConsumerStatefulWidget {
+  const SignUpPage({super.key});
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _SignUpPageState createState() => _SignUpPageState();
 }
 
-class _LoginPageState extends ConsumerState<LoginPage> {
+class _SignUpPageState extends ConsumerState<SignUpPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
   bool _isLoading = false;
 
   @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+    _confirmPasswordController.dispose();
     super.dispose();
   }
 
-  Future<void> _signIn() async {
+  Future<void> _signUp() async {
     final email = _emailController.text.trim();
     final password = _passwordController.text.trim();
     final authService = ref.read(authServiceProvider);
@@ -52,8 +55,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     setState(() => _isLoading = true);
 
     try {
-      await authService.signIn(email, password);
-      ToastHelper.showToast('Login successful!');
+      await authService.signUp(email, password);
+      ToastHelper.showToast('Sign Up successful!');
       if (mounted) {
         context.pushReplacement(AppRoutes.home);
       }
@@ -61,7 +64,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       final errorMessage = AuthErrorHandler.getErrorMessage(e as Exception);
       ToastHelper.showToast(errorMessage);
     } finally {
-      setState(() => _isLoading = false);
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
     }
   }
 
@@ -107,10 +112,10 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         ),
                         SizedBox(height: 30.h),
                         _isLoading
-                            ? Container() // Empty container for the "loading" state
-                            : CustomButton(text: 'Login', onPressed: _signIn),
+                            ? Container() // Empty container when loading is active
+                            : CustomButton(text: 'Sign Up', onPressed: _signUp),
                         SizedBox(height: 15.h),
-                        const LoginFooter(),
+                        const SignupFooter(),
                       ],
                     ),
                   ),
@@ -118,7 +123,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
               ],
             ),
 
-            if (_isLoading) LoadingWidget(),
+            // Full-page Loading Widget
+            if (_isLoading) const LoadingWidget(),
           ],
         ),
       ),
@@ -129,7 +135,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     return Column(
       children: [
         Text(
-          'Login',
+          'Sign Up',
           style: TextStyle(
             color: AppColors.textPrimaryColor,
             fontSize: 40.sp,
@@ -137,7 +143,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           ),
         ),
         Text(
-          'Sign in to continue',
+          'Create an account to get started',
           style: TextStyle(
             color: AppColors.textSecondaryColor,
             fontSize: 16.sp,

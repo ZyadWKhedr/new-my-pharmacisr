@@ -1,21 +1,28 @@
 import 'package:go_router/go_router.dart';
-import 'package:new_my_pharmacist/features/auth/presentation/pages/login_page.dart';
+import 'package:new_my_pharmacist/features/home/presentation/pages/home_page.dart';
+import '../features/auth/presentation/pages/login_page.dart';
+import '../features/auth/presentation/pages/sign_up_page.dart';
+
+class AppRoutes {
+  static const String login = '/';
+  static const String signup = '/signup';
+  static const String home = '/home';
+}
 
 final GoRouter goRouter = GoRouter(
-  initialLocation: '/',  // This is where your app starts
+  initialLocation: AppRoutes.login,
   routes: [
-    // GoRoute(
-    //   path: '/',
-    //   builder: (context, state) => HomePage(),
-    // ),
     GoRoute(
-      path: '/',
-      builder: (context, state) => LoginPage(),
+      path: AppRoutes.login,
+      builder: (context, state) => const LoginPage(),
     ),
-    // GoRoute(
-    //   path: '/profile',
-    //   builder: (context, state) => ProfilePage(),
-    // ),
-  
+    GoRoute(
+      path: AppRoutes.signup,
+      builder: (context, state) => const SignUpPage(),
+    ),
+    GoRoute(
+      path: AppRoutes.home,
+      builder: (context, state) => const HomePage(),
+    ),
   ],
 );
