@@ -3,11 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:new_my_pharmacist/core/consts/colors.dart';
 import 'package:new_my_pharmacist/core/helpers/auth_error_helper.dart';
-import 'package:new_my_pharmacist/core/helpers/toast_helper.dart';
 import 'package:new_my_pharmacist/core/helpers/auth_validator_helper.dart';
+import 'package:new_my_pharmacist/core/helpers/toast_helper.dart';
 import 'package:new_my_pharmacist/features/auth/presentation/widgets/custom_button.dart';
 import 'package:new_my_pharmacist/features/auth/presentation/widgets/custom_row.dart';
 import 'package:new_my_pharmacist/features/auth/presentation/widgets/custom_text_form_field.dart';
+import 'package:new_my_pharmacist/features/auth/presentation/widgets/loading_widget.dart';
 import 'package:new_my_pharmacist/features/auth/providers/auth_provider.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
@@ -34,6 +35,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     final password = _passwordController.text.trim();
     final authService = ref.read(authServiceProvider);
 
+    // Validate email and password
     final emailError = AuthValidatorHelper.validateEmail(email);
     final passwordError = AuthValidatorHelper.validatePassword(password);
 
@@ -51,7 +53,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     try {
       await authService.signIn(email, password);
       ToastHelper.showToast('Login successful!');
-      // Navigate to HomePage after successful login
     } catch (e) {
       final errorMessage = AuthErrorHandler.getErrorMessage(e as Exception);
       ToastHelper.showToast(errorMessage);
@@ -63,48 +64,58 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(), // Dismiss keyboard
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
+        body: Stack(
           children: [
-            Container(
-              width: double.infinity,
-              height: 470.h,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(topRight: Radius.circular(70)),
-                color: AppColors.primaryColor,
-              ),
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.w),
-                child: Column(
-                  children: [
-                    SizedBox(height: 40.h),
-                    _buildTitle(),
-                    SizedBox(height: 10.h),
-                    _buildLabel('Email'),
-                    CustomTextFormField(
-                      controller: _emailController,
-                      hintText: 'johnDoe@gmail.com',
-                      keyboardType: TextInputType.emailAddress,
+            // Main UI Content
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  width: double.infinity,
+                  height: 470.h,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(70),
                     ),
-                    SizedBox(height: 10.h),
-                    _buildLabel('Password'),
-                    CustomTextFormField(
-                      controller: _passwordController,
-                      hintText: '********',
-                      isPassword: true,
+                    color: AppColors.primaryColor,
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    child: Column(
+                      children: [
+                        SizedBox(height: 40.h),
+                        _buildTitle(),
+                        SizedBox(height: 10.h),
+                        _buildLabel('Email'),
+                        CustomTextFormField(
+                          controller: _emailController,
+                          hintText: 'johnDoe@gmail.com',
+                          keyboardType: TextInputType.emailAddress,
+                        ),
+                        SizedBox(height: 10.h),
+                        _buildLabel('Password'),
+                        CustomTextFormField(
+                          controller: _passwordController,
+                          hintText: '********',
+                          isPassword: true,
+                        ),
+                        SizedBox(height: 30.h),
+                        _isLoading
+                            ? Container() // Empty container when loading is active
+                            : CustomButton(text: 'Login', onPressed: _signIn),
+                        SizedBox(height: 15.h),
+                        const CustomRow(),
+                      ],
                     ),
-                    SizedBox(height: 30.h),
-                    _isLoading
-                        ? CircularProgressIndicator(color: Colors.white)
-                        : CustomButton(text: 'Login', onPressed: _signIn),
-                    SizedBox(height: 15.h),
-                    const CustomRow(),
-                  ],
+                  ),
                 ),
-              ),
+              ],
             ),
+
+            // Full-page Loading Widget
+            if (_isLoading) const LoadingWidget(),
           ],
         ),
       ),

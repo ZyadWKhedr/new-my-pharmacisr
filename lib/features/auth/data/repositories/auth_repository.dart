@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:new_my_pharmacist/core/helpers/auth_error_helper.dart';
-import 'package:new_my_pharmacist/core/helpers/toast_helper.dart';
 import 'package:new_my_pharmacist/features/auth/data/datasources/local_data_source.dart';
 import 'package:new_my_pharmacist/features/auth/domain/entities/user_entity.dart';
 import 'package:new_my_pharmacist/features/auth/domain/repositories/auth_repository.dart';
@@ -26,9 +25,9 @@ class AuthRepositoryImpl implements AuthRepository {
         throw Exception("User not found");
       }
     } on firebase_auth.FirebaseAuthException catch (e) {
-      final errorMessage = AuthErrorHandler.getErrorMessage(e);
-      ToastHelper.showToast(errorMessage);
-      throw Exception(errorMessage);
+      throw Exception(
+        AuthErrorHandler.getErrorMessage(e),
+      ); 
     }
   }
 
@@ -47,9 +46,9 @@ class AuthRepositoryImpl implements AuthRepository {
         throw Exception("User creation failed");
       }
     } on firebase_auth.FirebaseAuthException catch (e) {
-      final errorMessage = AuthErrorHandler.getErrorMessage(e);
-      ToastHelper.showToast(errorMessage);
-      throw Exception(errorMessage);
+      throw Exception(
+        AuthErrorHandler.getErrorMessage(e),
+      ); 
     }
   }
 
