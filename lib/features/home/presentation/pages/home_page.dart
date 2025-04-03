@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:new_my_pharmacist/features/home/presentation/providers/health_tip_provider.dart';
 import 'package:new_my_pharmacist/features/home/presentation/widgets/article_slider.dart';
+import 'package:new_my_pharmacist/features/home/presentation/widgets/health_tip_card.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -32,7 +35,6 @@ class _HomePageState extends State<HomePage> {
                     'Health Articles',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                  
                 ],
               ),
             ),
@@ -80,41 +82,26 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildHealthTipsSection() {
-    return SizedBox(
-      height: 120,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        children: [
-          _buildHealthTipCard('Stay Hydrated', Icons.local_drink),
-          _buildHealthTipCard('Regular Exercise', Icons.directions_run),
-          _buildHealthTipCard('Healthy Diet', Icons.restaurant),
-          _buildHealthTipCard('Adequate Sleep', Icons.bedtime),
-        ],
-      ),
-    );
-  }
+    return Consumer(
+      builder: (context, ref, child) {
+        final dailyTipsAsync = ref.watch(randomHealthTipsProvider);
 
-  Widget _buildHealthTipCard(String title, IconData icon) {
-    return Container(
-      width: 100,
-      margin: const EdgeInsets.only(right: 12),
-      decoration: BoxDecoration(
-        color: Colors.blue.shade50,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, size: 30, color: Colors.blue),
-          const SizedBox(height: 8),
-          Text(
-            title,
-            textAlign: TextAlign.center,
-            style: TextStyle(fontWeight: FontWeight.w500),
+        return SizedBox(
+          height: 120,
+          child: dailyTipsAsync.when(
+            loading: () => const Center(child: CircularProgressIndicator()),
+            error: (error, stack) => Center(child: Text('Error loading tips')),
+            data:
+                (tips) => ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  itemCount: tips.length,
+                  itemBuilder:
+                      (context, index) => HealthTipCard(tip: tips[index]),
+                ),
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 
