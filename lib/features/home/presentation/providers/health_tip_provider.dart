@@ -21,7 +21,6 @@ final healthTipRepositoryProvider = Provider<HealthTipRepository>((ref) {
 final randomHealthTipsProvider =
     FutureProvider.autoDispose<List<HealthTipEntity>>((ref) async {
       final repository = ref.read(healthTipRepositoryProvider);
-      final allTips = await repository.fetchAllHealthTips();
       return repository.fetchDailyTips(count: 4);
     });
 

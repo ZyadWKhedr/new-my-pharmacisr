@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:new_my_pharmacist/features/home/presentation/pages/emergency_contacts_page.dart';
 import 'package:new_my_pharmacist/features/home/presentation/pages/home_page.dart';
 import 'package:new_my_pharmacist/features/splash/splash_screen.dart';
 import '../features/auth/presentation/pages/login_page.dart';
@@ -12,6 +13,8 @@ class AppRoutes {
   static const String favourites = '/favourites';
   static const String reminders = '/reminders';
   static const String profile = '/profile';
+  static const String emergency = '/emergency';
+
   static const String splash = '/';
 }
 
@@ -33,6 +36,10 @@ final GoRouter goRouter = GoRouter(
     GoRoute(
       path: AppRoutes.home,
       builder: (context, state) => const HomePage(),
+    ),
+    GoRoute(
+      path: AppRoutes.emergency,
+      builder: (context, state) => const EmergencyContactsPage(),
     ),
   ],
 );
