@@ -10,10 +10,10 @@ class QuickAccessGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     final items = [
       QuickAccessItem(
-        title: 'Medication Reminder',
+        title: 'Medications',
         icon: Icons.alarm,
-        color: AppColors.primaryColor, // Dark Purple
-        onTap: () => context.push(AppRoutes.reminders),
+        color: const Color.fromARGB(255, 48, 108, 110),
+        onTap: () => context.push(AppRoutes.medicine),
       ),
       QuickAccessItem(
         title: 'AI Chat',
@@ -26,6 +26,12 @@ class QuickAccessGrid extends StatelessWidget {
         icon: Icons.favorite,
         color: AppColors.errorColor, // Red
         onTap: () => context.push(AppRoutes.favourites),
+      ),
+      QuickAccessItem(
+        title: 'Medication Reminder',
+        icon: Icons.alarm,
+        color: AppColors.primaryColor, // Dark Purple
+        onTap: () => context.push(AppRoutes.reminders),
       ),
       QuickAccessItem(
         title: 'Emergency Contacts',
